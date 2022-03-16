@@ -12,6 +12,8 @@ namespace SalesWebMvc.Models
         public double BaseSalary { get; set; }
         public DateTime BirthDate { get; set; }
         public Departament Departament { get; set; }
+        public int DepartamentId { get; set; }
+        //com o uso do departamentId estamos avisando ao entity framework que a nossa chave estrangeira deve existir
         public ICollection<SalesRecord> Sales { get; set; } = new List<SalesRecord>();
 
         public Seller()

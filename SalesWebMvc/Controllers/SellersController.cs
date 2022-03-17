@@ -43,6 +43,13 @@ namespace SalesWebMvc.Controllers
         [ValidateAntiForgeryToken] //protege contra ataque csrs que visa usar o token de sessao para fazer requisicoes a aplicacao
         public IActionResult Create(Seller seller)
         {
+            if (!ModelState.IsValid)
+            {
+                var departaments = _departamentService.FindAll();
+                var viewModel = new SellerFormViewModel { Seller = seller, Departaments = departaments };
+                return View(viewModel);
+            }
+
             _sellerService.Inser(seller);
             return RedirectToAction(nameof(Index));
         }
@@ -112,6 +119,14 @@ namespace SalesWebMvc.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, Seller seller)
         {
+
+            if (!ModelState.IsValid)
+            {
+                var departaments = _departamentService.FindAll();
+                var viewModel = new SellerFormViewModel { Seller = seller, Departaments = departaments };
+                return View(viewModel);
+            }
+
             if (id != seller.Id)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id mismatch" });
